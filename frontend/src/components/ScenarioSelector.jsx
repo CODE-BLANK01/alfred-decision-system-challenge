@@ -1,6 +1,7 @@
 const CATEGORY_STYLES = {
   easy:        { color: 'var(--green)',   bg: 'var(--green-bg)',   border: 'var(--green-border)' },
-  ambiguous:   { color: 'var(--amber)',   bg: 'var(--amber-bg)',   border: 'var(--amber-border)' },
+  confirm:     { color: 'var(--amber)',   bg: 'var(--amber-bg)',   border: 'var(--amber-border)' },
+  ambiguous:   { color: 'var(--coral)',   bg: 'var(--coral-bg)',   border: 'var(--coral-border)' },
   adversarial: { color: 'var(--red)',     bg: 'var(--red-bg)',     border: 'var(--red-border)' },
 }
 

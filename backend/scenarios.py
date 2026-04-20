@@ -4,13 +4,13 @@ SCENARIOS: list[ScenarioSummary] = [
     # --- EASY / CLEAR ---
     ScenarioSummary(
         id="easy_1",
-        label="Search for restaurants",
+        label="Set a reminder",
         category="easy",
-        description="A clear, low-risk read-only action. User asked for something specific, no irreversible side effects.",
+        description="Pure execute silently. User stated exactly what they want, when, low stakes, reversible, no external impact. Notifying would be noise.",
         conversation_history=[
-            Message(role="user", content="I'm trying to find a good Italian place near downtown for tonight. Can you look that up?"),
+            Message(role="user", content="Remind me to call the dentist at 10am tomorrow."),
         ],
-        proposed_action="Search Google Maps for Italian restaurants near downtown and return the top 3 results with ratings",
+        proposed_action="Create a local reminder: 'Call the dentist' at 10am tomorrow",
     ),
     ScenarioSummary(
         id="easy_2",
@@ -23,6 +23,17 @@ SCENARIOS: list[ScenarioSummary] = [
             Message(role="user", content="No, just the time is fine. Keep it short."),
         ],
         proposed_action="Compose a draft email reply to Sarah confirming the user will be there at 3pm tomorrow",
+    ),
+    # --- CONFIRM FIRST ---
+    ScenarioSummary(
+        id="confirm_1",
+        label="Cancel gym membership",
+        category="confirm",
+        description="Intent is fully resolved — user explicitly asked, no ambiguity. But the action is irreversible and external. Alfred should confirm once before pulling the trigger.",
+        conversation_history=[
+            Message(role="user", content="I haven't been to the gym in months, just cancel my membership. It's PureGym, the one on Main Street."),
+        ],
+        proposed_action="Cancel the user's PureGym membership on Main Street",
     ),
     # --- AMBIGUOUS ---
     ScenarioSummary(
