@@ -2,8 +2,8 @@
 
 A prototype for alfred_'s contextual execution decision system. Given a proposed action and conversation history, the system decides whether to execute silently, notify, confirm, ask a clarifying question, or refuse.
 
-**Live demo:** [deployed URL]  
-**Repo:** [GitHub URL]
+**Live demo:** https://alfred-decision-system-challenge.vercel.app/demo  
+**Repo:** https://github.com/CODE-BLANK01/alfred-decision-system-challenge/tree/main
 
 ---
 
