@@ -5,32 +5,67 @@
 }
 
 :root {
-  --bg: #0f0f11;
-  --surface: #17171a;
-  --surface-raised: #1e1e22;
-  --border: #2a2a30;
-  --border-subtle: #222228;
-  --text: #e8e8ee;
-  --text-muted: #8888a0;
-  --text-dim: #555566;
+  /* alfred_ dark theme */
+  --bg: #18181b;
+  --surface: rgba(255,255,255,0.05);
+  --surface-raised: rgba(255,255,255,0.08);
+  --surface-float: #232328;
+  --border: rgba(255,255,255,0.1);
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-emphasis: rgba(255,255,255,0.15);
 
-  --green: #22c55e;
-  --green-bg: #052e16;
+  --text: #fcfcfa;
+  --text-secondary: rgba(252,252,250,0.7);
+  --text-muted: rgba(252,252,250,0.5);
+  --text-dim: rgba(252,252,250,0.3);
+
+  /* alfred_ brand palette */
+  --primary: #fd9e55;
+  --primary-light: #fddba0;
+  --primary-dark: #e8883d;
+  --primary-bg: rgba(253,158,85,0.1);
+  --primary-border: rgba(253,158,85,0.2);
+  --primary-glow: 0 4px 24px rgba(253,158,85,0.4), 0 2px 12px rgba(253,158,85,0.3);
+
+  /* semantic colors */
+  --green: #10b981;
+  --green-bg: rgba(16,185,129,0.1);
+  --green-border: rgba(16,185,129,0.2);
+
   --blue: #3b82f6;
-  --blue-bg: #0c1a3a;
-  --amber: #f59e0b;
-  --amber-bg: #2d1f00;
-  --orange: #f97316;
-  --orange-bg: #2d1100;
-  --red: #ef4444;
-  --red-bg: #2d0a0a;
-  --purple: #a855f7;
-  --purple-bg: #1e0a30;
+  --blue-bg: rgba(59,130,246,0.1);
+  --blue-border: rgba(59,130,246,0.2);
 
-  --font: 'Inter', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --radius: 8px;
-  --radius-sm: 5px;
+  --amber: #ffb84d;
+  --amber-bg: rgba(255,184,77,0.1);
+  --amber-border: rgba(255,184,77,0.2);
+
+  --coral: #ff8f8f;
+  --coral-bg: rgba(255,143,143,0.1);
+  --coral-border: rgba(255,143,143,0.2);
+
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.1);
+  --red-border: rgba(248,113,113,0.2);
+
+  --purple: #a855f7;
+  --purple-bg: rgba(168,85,247,0.1);
+
+  /* shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 8px rgba(253,158,85,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5), 0 4px 8px rgba(0,0,0,0.3);
+
+  --font: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Satoshi', 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
 }
 
 html, body {
@@ -40,13 +75,15 @@ html, body {
   font-size: 14px;
   line-height: 1.6;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100vh;
 }
 
-a { color: var(--blue); }
+a { color: var(--primary); }
 button { cursor: pointer; font-family: var(--font); }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }

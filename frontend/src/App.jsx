@@ -57,31 +57,52 @@ export default function App() {
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 20px' }}>
-      <header style={{ marginBottom: 36 }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
-          <span style={{ fontSize: 22, fontWeight: 700, letterSpacing: '-0.5px' }}>alfred_</span>
-          <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>Execution Decision Layer</span>
+      <header style={{ marginBottom: 40 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+          <span style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 26, fontWeight: 900,
+            letterSpacing: '-0.5px',
+            color: 'var(--primary)',
+          }}>
+            alfred_
+          </span>
+          <span style={{
+            fontSize: 12, fontWeight: 500,
+            color: 'var(--text-muted)',
+            background: 'var(--surface-raised)',
+            border: '1px solid var(--border)',
+            padding: '3px 10px', borderRadius: 'var(--radius-full)',
+            letterSpacing: '0.04em',
+          }}>
+            Execution Decision Layer
+          </span>
         </div>
-        <p style={{ color: 'var(--text-muted)', fontSize: 13, maxWidth: 560 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: 13, maxWidth: 560, lineHeight: 1.7 }}>
           Given a proposed action and conversation context, the system decides whether to execute silently,
           notify, confirm, ask a clarifying question, or refuse.
         </p>
       </header>
 
-      <div style={{ display: 'flex', gap: 2, marginBottom: 24, background: 'var(--surface)', borderRadius: 8, padding: 3, width: 'fit-content' }}>
+      <div style={{
+        display: 'flex', gap: 2, marginBottom: 28,
+        background: 'var(--surface)', border: '1px solid var(--border)',
+        borderRadius: 'var(--radius)', padding: 3, width: 'fit-content',
+      }}>
         {TABS.map(t => (
           <button
             key={t}
             onClick={() => { setTab(t); setTrace(null); setError(null) }}
             style={{
               padding: '6px 16px',
-              borderRadius: 6,
+              borderRadius: 8,
               border: 'none',
               fontSize: 13,
               fontWeight: 500,
               background: tab === t ? 'var(--surface-raised)' : 'transparent',
               color: tab === t ? 'var(--text)' : 'var(--text-muted)',
               transition: 'all 0.15s',
+              boxShadow: tab === t ? 'var(--shadow-sm)' : 'none',
             }}
           >
             {t === 'scenarios' ? 'Preloaded Scenarios' : t === 'custom' ? 'Custom Input' : 'Failure Modes'}
@@ -124,9 +145,9 @@ export default function App() {
       )}
 
       {loading && !trace && (
-        <div style={{ marginTop: 40, textAlign: 'center', color: 'var(--text-muted)' }}>
+        <div style={{ marginTop: 48, textAlign: 'center', color: 'var(--text-muted)' }}>
           <Spinner />
-          <div style={{ marginTop: 12, fontSize: 13 }}>Running decision pipeline…</div>
+          <div style={{ marginTop: 14, fontSize: 13, color: 'var(--text-muted)' }}>Running decision pipeline…</div>
         </div>
       )}
 
@@ -140,7 +161,7 @@ function Spinner() {
     <div style={{
       display: 'inline-block', width: 28, height: 28,
       border: '2px solid var(--border)',
-      borderTopColor: 'var(--blue)',
+      borderTopColor: 'var(--primary)',
       borderRadius: '50%',
       animation: 'spin 0.8s linear infinite',
     }} />

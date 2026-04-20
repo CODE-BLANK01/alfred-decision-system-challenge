@@ -4,11 +4,11 @@ const RISK_MAP = {
 }
 
 const COLORS = {
-  green: { color: 'var(--green)', bg: 'var(--green-bg)' },
-  amber: { color: 'var(--amber)', bg: 'var(--amber-bg)' },
-  red: { color: 'var(--red)', bg: 'var(--red-bg)' },
-  blue: { color: 'var(--blue)', bg: 'var(--blue-bg)' },
-  muted: { color: 'var(--text-muted)', bg: 'var(--surface-raised)' },
+  green:   { color: 'var(--green)',   bg: 'var(--green-bg)',   border: 'var(--green-border)' },
+  amber:   { color: 'var(--amber)',   bg: 'var(--amber-bg)',   border: 'var(--amber-border)' },
+  red:     { color: 'var(--red)',     bg: 'var(--red-bg)',     border: 'var(--red-border)' },
+  primary: { color: 'var(--primary)', bg: 'var(--primary-bg)', border: 'var(--primary-border)' },
+  muted:   { color: 'var(--text-muted)', bg: 'var(--surface-raised)', border: 'var(--border)' },
 }
 
 function Chip({ value, colorKey = 'muted', label }) {
@@ -16,18 +16,19 @@ function Chip({ value, colorKey = 'muted', label }) {
   return (
     <span style={{
       display: 'inline-block',
-      fontSize: 12, fontWeight: 500,
-      padding: '2px 9px', borderRadius: 99,
+      fontSize: 11, fontWeight: 600,
+      padding: '2px 9px', borderRadius: 'var(--radius-full)',
       background: c.bg, color: c.color,
-      border: `1px solid ${c.color}33`,
+      border: `1px solid ${c.border}`,
+      letterSpacing: '0.02em',
     }}>
       {label ?? String(value)}
     </span>
   )
 }
 
-function ScoreBar({ value, max = 1.0, highIsGood = false }) {
-  const pct = Math.round((value / max) * 100)
+function ScoreBar({ value, highIsGood = false }) {
+  const pct = Math.round(value * 100)
   const isHigh = value > 0.6
   const color = highIsGood
     ? (isHigh ? 'var(--green)' : 'var(--amber)')
@@ -35,12 +36,12 @@ function ScoreBar({ value, max = 1.0, highIsGood = false }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
       <div style={{
-        flex: 1, height: 6, background: 'var(--surface-raised)',
-        borderRadius: 99, overflow: 'hidden',
+        flex: 1, height: 5, background: 'var(--surface-raised)',
+        borderRadius: 'var(--radius-full)', overflow: 'hidden',
       }}>
-        <div style={{ width: `${pct}%`, height: '100%', background: color, transition: 'width 0.3s' }} />
+        <div style={{ width: `${pct}%`, height: '100%', background: color, borderRadius: 'var(--radius-full)', transition: 'width 0.3s' }} />
       </div>
-      <span style={{ fontSize: 12, color: 'var(--text-muted)', minWidth: 32, textAlign: 'right' }}>
+      <span style={{ fontSize: 11, color: 'var(--text-muted)', minWidth: 32, textAlign: 'right', fontFamily: 'var(--mono)' }}>
         {value.toFixed(2)}
       </span>
     </div>
@@ -50,10 +51,14 @@ function ScoreBar({ value, max = 1.0, highIsGood = false }) {
 function Row({ label, children }) {
   return (
     <tr>
-      <td style={{ padding: '7px 0', color: 'var(--text-muted)', fontSize: 12, paddingRight: 20, whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+      <td style={{
+        padding: '8px 0', color: 'var(--text-dim)',
+        fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em',
+        paddingRight: 24, whiteSpace: 'nowrap', verticalAlign: 'middle', width: 180,
+      }}>
         {label}
       </td>
-      <td style={{ padding: '7px 0', verticalAlign: 'middle' }}>
+      <td style={{ padding: '8px 0', verticalAlign: 'middle' }}>
         {children}
       </td>
     </tr>
@@ -65,16 +70,10 @@ export default function SignalsPanel({ signals }) {
     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
       <tbody>
         <Row label="Reversibility">
-          <Chip
-            value={signals.reversibility}
-            colorKey={RISK_MAP.reversibility[signals.reversibility] || 'muted'}
-          />
+          <Chip value={signals.reversibility} colorKey={RISK_MAP.reversibility[signals.reversibility] || 'muted'} />
         </Row>
         <Row label="Scope">
-          <Chip
-            value={signals.scope}
-            colorKey={RISK_MAP.scope[signals.scope] || 'muted'}
-          />
+          <Chip value={signals.scope} colorKey={RISK_MAP.scope[signals.scope] || 'muted'} />
         </Row>
         <Row label="Explicitly requested">
           <Chip
@@ -90,15 +89,17 @@ export default function SignalsPanel({ signals }) {
             label={signals.urgency_claim ? 'detected' : 'none'}
           />
         </Row>
-        <Row label="Explicit hold in history">
+        <Row label="Explicit hold">
           <Chip
             value={signals.has_explicit_hold}
             colorKey={signals.has_explicit_hold ? 'red' : 'green'}
-            label={signals.has_explicit_hold ? 'YES — user said hold off' : 'no'}
+            label={signals.has_explicit_hold ? 'YES — hold in history' : 'none'}
           />
         </Row>
         <Row label="Prior confirmations">
-          <span style={{ fontSize: 13, color: 'var(--text)' }}>{signals.prior_confirmations}</span>
+          <span style={{ fontSize: 13, color: 'var(--text-secondary)', fontFamily: 'var(--mono)' }}>
+            {signals.prior_confirmations}
+          </span>
         </Row>
         <Row label="Ambiguity score">
           <ScoreBar value={signals.ambiguity_score} highIsGood={false} />
@@ -107,7 +108,7 @@ export default function SignalsPanel({ signals }) {
           <ScoreBar value={signals.context_completeness} highIsGood={true} />
         </Row>
         {signals.adversarial_indicators?.length > 0 && (
-          <Row label="Adversarial indicators">
+          <Row label="Adversarial">
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
               {signals.adversarial_indicators.map(ind => (
                 <Chip key={ind} value={ind} colorKey="red" />

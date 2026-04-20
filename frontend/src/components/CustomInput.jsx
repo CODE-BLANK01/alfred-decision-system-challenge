@@ -24,13 +24,30 @@ export default function CustomInput({ onSubmit, loading }) {
     onSubmit(filtered, action.trim())
   }
 
+  function handleReset() {
+    setHistory([{ role: 'user', content: '' }])
+    setAction('')
+  }
+
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <label style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 500 }}>
-          Conversation History
-        </label>
-        <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <label style={{ fontSize: 11, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+            Conversation History
+          </label>
+          <button
+            onClick={handleReset}
+            style={{
+              background: 'none', border: '1px solid var(--border)',
+              color: 'var(--text-muted)', borderRadius: 'var(--radius-sm)',
+              padding: '3px 10px', fontSize: 11, fontWeight: 500,
+            }}
+          >
+            Reset fields
+          </button>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {history.map((msg, i) => (
             <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
               <select
@@ -73,7 +90,7 @@ export default function CustomInput({ onSubmit, loading }) {
       </div>
 
       <div style={{ marginBottom: 16 }}>
-        <label style={{ fontSize: 12, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 500 }}>
+        <label style={{ fontSize: 11, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
           Proposed Action
         </label>
         <textarea
@@ -89,12 +106,14 @@ export default function CustomInput({ onSubmit, loading }) {
         onClick={handleSubmit}
         disabled={loading || !action.trim()}
         style={{
-          padding: '9px 22px',
-          background: loading || !action.trim() ? 'var(--surface-raised)' : 'var(--blue)',
-          color: loading || !action.trim() ? 'var(--text-muted)' : '#fff',
+          padding: '9px 24px',
+          background: loading || !action.trim() ? 'var(--surface-raised)' : 'var(--primary)',
+          color: loading || !action.trim() ? 'var(--text-muted)' : '#18181b',
           border: 'none', borderRadius: 'var(--radius)',
-          fontWeight: 600, fontSize: 13,
-          opacity: loading ? 0.7 : 1,
+          fontWeight: 700, fontSize: 13,
+          opacity: loading ? 0.6 : 1,
+          boxShadow: loading || !action.trim() ? 'none' : 'var(--primary-glow)',
+          transition: 'all 0.2s',
         }}
       >
         {loading ? 'Analyzing…' : 'Run Decision Pipeline →'}
